@@ -1,0 +1,49 @@
+
+package com.mycompany.towerdefense;
+
+import ListaEnlazada.Lista;
+import elementos.Castillo;
+import elementos.Tropa;
+
+public class Jugador {
+    private Castillo castillo;
+    private Lista<Tropa> tropas = new Lista<Tropa>();
+    private int direccion;
+    private int posXTropas;
+    private boolean cpu=false;
+
+    public Jugador(int jugador) {
+        if (jugador==1){
+            castillo = new Castillo(50, 100);
+            direccion = 1;
+            posXTropas = castillo.getX()+castillo.getWidth()+25;
+        } else if(jugador == 2) {
+            castillo = new Castillo(500, 100);
+            direccion = -1;
+            posXTropas = castillo.getX()-25-20;
+            cpu = true;
+        }
+    }
+    
+    public void añadirTropa(String tipo,int camino){
+        Tropa t = new Tropa(tipo,posXTropas,0, direccion, tropas.tamaño()*30);
+        if (camino==1){
+            t.setY(castillo.getY());
+        } else {
+            t.setY(castillo.getY() + castillo.getHeight() - 20 );
+        }
+        if (cpu){
+            t.setIncognito();
+        }
+        tropas.añadir(t);
+    }
+
+    public Castillo getCastillo() {
+        return castillo;
+    }
+
+    public Lista<Tropa> getTropas() {
+        return tropas;
+    }
+
+}
